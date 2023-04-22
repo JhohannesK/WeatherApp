@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import { SearchInputProps } from '../_types';
+import { startSearch } from './api/search';
 
 const data = [
 	{
@@ -17,17 +19,23 @@ const data = [
 	},
 ];
 
-interface SearchInputProps {
-	displayLocation: (location: string) => void;
-}
-
 const SearchInput = ({ displayLocation }: SearchInputProps) => {
 	const [value, setValue] = useState<string | null>(null);
+	console.log('🚀 ~ file: SearchInput.tsx:24 ~ SearchInput ~ value:', value);
 	const [isFocus, setIsFocus] = useState(false);
 	const [location, setLocation] = useState('');
+	console.log(
+		'🚀 ~ file: SearchInput.tsx:29 ~ SearchInput ~ location:',
+		location
+	);
 
 	const displayText = (loc: string) => {
 		displayLocation(loc);
+	};
+
+	const onTextChange = () => {
+		setLocation;
+		setIsFocus(true);
 	};
 	return (
 		<View>
@@ -37,9 +45,19 @@ const SearchInput = ({ displayLocation }: SearchInputProps) => {
 				style={styles.textInput}
 				placeholderTextColor={'white'}
 				clearButtonMode='always'
-				onChangeText={setLocation}
+				onChangeText={onTextChange}
 				value={location}
 				onBlur={() => displayText(location)}
+			/> */}
+			{/* {isFocus && (
+				<View style={styles.dropdownView}>
+					<Text>haha</Text>
+				</View>
+			)} */}
+			{/* <FlatList
+				style={styles.dropdownView}
+				data={data}
+				renderItem={({ item }) => <Text>{item.label}</Text>}
 			/> */}
 			<Dropdown
 				style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
@@ -59,6 +77,10 @@ const SearchInput = ({ displayLocation }: SearchInputProps) => {
 					setIsFocus(false);
 					setValue(item.value);
 				}}
+				onChangeText={(item) => {
+					console.log('typed', item);
+					startSearch();
+				}}
 			/>
 		</View>
 	);
@@ -73,10 +95,11 @@ const styles = StyleSheet.create({
 	},
 
 	textInput: {
-		backgroundColor: '#666',
-		color: 'white',
-		height: 40,
-		width: 300,
+		position: 'relative',
+		backgroundColor: 'white',
+		color: 'black',
+		height: 50,
+		width: '100%',
 		marginTop: 20,
 		marginHorizontal: 20,
 		paddingHorizontal: 10,

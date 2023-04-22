@@ -1,13 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import {
-	Image,
 	ImageBackground,
 	KeyboardAvoidingView,
 	Platform,
-	SafeAreaView,
 	StyleSheet,
 	Text,
-	TextInput,
 	View,
 } from 'react-native';
 import SearchInput from './components/SearchInput';
@@ -34,7 +31,9 @@ export default function App() {
 						{location.length ? location : 'San Francisco'}
 					</Text>
 					<Text style={styles.textStyle}>Light Cloud</Text>
-					<Text style={[styles.textStyle, styles.largeText]}>32</Text>
+					<Text style={[styles.textStyle, styles.largeText]}>
+						32&#176;C
+					</Text>
 					<SearchInput displayLocation={displayLocation} />
 				</View>
 

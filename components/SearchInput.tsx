@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { SearchInputProps } from '../_types';
-import { startSearch } from './api/search';
+import { useGeoLocation } from './api/search';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const data = [
 	{
@@ -19,15 +21,11 @@ const data = [
 	},
 ];
 
-const SearchInput = ({ displayLocation }: SearchInputProps) => {
+const SearchInput = ({ displayLocation, navigation }: SearchInputProps) => {
+	const { getGeoLocation, data } = useGeoLocation();
 	const [value, setValue] = useState<string | null>(null);
-	console.log('🚀 ~ file: SearchInput.tsx:24 ~ SearchInput ~ value:', value);
 	const [isFocus, setIsFocus] = useState(false);
 	const [location, setLocation] = useState('');
-	console.log(
-		'🚀 ~ file: SearchInput.tsx:29 ~ SearchInput ~ location:',
-		location
-	);
 
 	const displayText = (loc: string) => {
 		displayLocation(loc);
@@ -39,16 +37,16 @@ const SearchInput = ({ displayLocation }: SearchInputProps) => {
 	};
 	return (
 		<View>
-			{/* <TextInput
+			<TextInput
 				placeholder='Search your city'
 				autoCorrect={false}
 				style={styles.textInput}
 				placeholderTextColor={'white'}
 				clearButtonMode='always'
-				onChangeText={onTextChange}
+				onChangeText={setLocation}
 				value={location}
 				onBlur={() => displayText(location)}
-			/> */}
+			/>
 			{/* {isFocus && (
 				<View style={styles.dropdownView}>
 					<Text>haha</Text>
@@ -59,12 +57,12 @@ const SearchInput = ({ displayLocation }: SearchInputProps) => {
 				data={data}
 				renderItem={({ item }) => <Text>{item.label}</Text>}
 			/> */}
-			<Dropdown
+			{/* <Dropdown
 				style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
 				placeholderStyle={styles.placeholderStyle}
 				selectedTextStyle={styles.selectedTextStyle}
 				inputSearchStyle={styles.inputSearchStyle}
-				data={data}
+				data={data ? data : []}
 				placeholder={!isFocus ? 'Search City' : '...'}
 				searchPlaceholder='Search...'
 				value={'try'}
@@ -79,9 +77,14 @@ const SearchInput = ({ displayLocation }: SearchInputProps) => {
 				}}
 				onChangeText={(item) => {
 					console.log('typed', item);
-					startSearch();
+					getGeoLocation(item);
 				}}
-			/>
+			/> */}
+			<TouchableOpacity
+				onPress={() => navigation.navigate('Forecast', { name: location })}
+			>
+				<Icon name='search' size={22} color='white' />
+			</TouchableOpacity>
 		</View>
 	);
 };

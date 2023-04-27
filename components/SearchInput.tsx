@@ -22,7 +22,6 @@ const data = [
 ];
 
 const SearchInput = ({ displayLocation, navigation }: SearchInputProps) => {
-	const { getGeoLocation, data } = useGeoLocation();
 	const [value, setValue] = useState<string | null>(null);
 	const [isFocus, setIsFocus] = useState(false);
 	const [location, setLocation] = useState('');
@@ -41,7 +40,7 @@ const SearchInput = ({ displayLocation, navigation }: SearchInputProps) => {
 				placeholder='Search your city'
 				autoCorrect={false}
 				style={styles.textInput}
-				placeholderTextColor={'white'}
+				placeholderTextColor={'gray'}
 				clearButtonMode='always'
 				onChangeText={setLocation}
 				value={location}

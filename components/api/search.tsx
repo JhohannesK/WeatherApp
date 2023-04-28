@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { GeoResponse } from '../../_types';
+import { GeoLocation } from '../../_types';
 
 const getUrl = (location: string) => {
 	const options = {
@@ -15,15 +15,17 @@ const getUrl = (location: string) => {
 	return options;
 };
 
-export const useGeoLocation = () => {
-	const [data, setData] = useState<Pick<GeoResponse, 'city' | 'regionCode'>>();
-	console.log('🚀 ~ file: search.tsx:19 ~ useGeoLocation ~ data:', data);
+export const useGeoLocation = (
+	onSucess: (latitude: number, longitude: number) => void
+) => {
+	const [data, setData] = useState<GeoLocation>();
 	const getGeoLocation = (location: string) => {
 		axios
 			.request(getUrl(location))
 			.then(function (response) {
-				console.log('this data', response.data);
-				setData(response.data);
+				const { longitude, latitude } = response.data.data[0];
+				onSucess && onSucess(latitude, longitude);
+				setData({ longitude, latitude });
 			})
 			.catch(function (error) {
 				console.error(error);

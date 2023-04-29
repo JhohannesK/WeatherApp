@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { GeoLocation } from '../../_types';
+// import { RAPIDAPI_KEY } from 'react-native-dotenv';
 
 const getUrl = (location: string) => {
 	const options = {

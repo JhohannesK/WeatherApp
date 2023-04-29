@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import SearchInput from './SearchInput';
 import { StatusBar } from 'expo-status-bar';
+import { TouchableOpacity } from 'react-native';
+import { log } from 'react-native-reanimated';
 
 const Home = ({ navigation }: { navigation: any }) => {
 	const [location, setLocation] = useState('');
@@ -28,13 +30,9 @@ const Home = ({ navigation }: { navigation: any }) => {
 				imageStyle={styles.image}
 			>
 				<View style={styles.detailsContainer}>
-					{/* <Text style={[styles.largeText, styles.textStyle]}>
-						{location.length ? location : 'San Francisco'}
-					</Text>
-					<Text style={styles.textStyle}>Light Cloud</Text> */}
-					{/* <Text style={[styles.textStyle, styles.largeText]}>
-						32&#176;C
-					</Text> */}
+					<TouchableOpacity onPress={() => console.log('here')}>
+						<Text>Please click</Text>
+					</TouchableOpacity>
 					<SearchInput
 						displayLocation={displayLocation}
 						navigation={navigation}

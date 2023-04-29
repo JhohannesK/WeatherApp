@@ -3,7 +3,7 @@ export interface SearchInputProps {
 	navigation: any;
 }
 
-export type GeoResponse = {
+export type ResponseType = {
 	id: number;
 	wikiDataId: string;
 	type: string;
@@ -18,3 +18,21 @@ export type GeoResponse = {
 	longitude: number;
 	population: number;
 };
+
+export interface GeoLocation {
+	latitude: number;
+	longitude: number;
+}
+
+export interface IForecast {
+	cloud_pct: number;
+	feels_like: number;
+	humidity: number;
+	max_temp: number;
+	min_temp: number;
+	sunrise: number;
+	sunset: number;
+	temp: number;
+	wind_speed: number;
+	wind_degree: number;
+}

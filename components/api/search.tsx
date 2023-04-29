@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { GeoLocation } from '../../_types';
-// import { RAPIDAPI_KEY } from 'react-native-dotenv';
 
 const getUrl = (location: string) => {
 	const options = {
@@ -20,6 +19,7 @@ export const useGeoLocation = (
 	onSucess: (latitude: number, longitude: number) => void
 ) => {
 	const [data, setData] = useState<GeoLocation>();
+	const [error, setError] = useState<Boolean>(false);
 	const getGeoLocation = (location: string) => {
 		axios
 			.request(getUrl(location))
@@ -27,13 +27,15 @@ export const useGeoLocation = (
 				const { longitude, latitude } = response.data.data[0];
 				onSucess && onSucess(latitude, longitude);
 				setData({ longitude, latitude });
+				setError(false);
 			})
 			.catch(function (error) {
-				console.error(error);
+				setError(true);
 			});
 	};
 	return {
 		getGeoLocation,
 		data,
+		error,
 	};
 };

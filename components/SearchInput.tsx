@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SearchInputProps } from '../_types';
-import { useGeoLocation } from './api/search';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 

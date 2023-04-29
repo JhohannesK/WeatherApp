@@ -45,7 +45,7 @@ const Forecast = ({
 	const { name } = route.params;
 	const [forecastData, setForecastData] = useState<IForecast>();
 
-	const { getGeoLocation, data } = useGeoLocation((latitude, longitude) => {
+	const { getGeoLocation, error } = useGeoLocation((latitude, longitude) => {
 		try {
 			const response = axios
 				.request(options(latitude, longitude))
@@ -62,56 +62,79 @@ const Forecast = ({
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<Text style={styles.location}>
-				{name[0].toUpperCase() + name.substring(1)}
-			</Text>
-			<View
-				style={{
-					backgroundColor: 'black',
-					borderRadius: 70,
-					paddingVertical: 5 * 2,
-					paddingHorizontal: 7 * 2,
-				}}
-			>
-				{displayDate()}
-			</View>
-			<Text style={styles.temp}>{forecastData?.temp}&#176;</Text>
-			<View style={styles.summary}>
-				<Text style={styles.summaryTitle}>Data Summary</Text>
-				<Text style={styles.summaryDesc}>
-					It actually feels like {forecastData?.feels_like}&#176; now
-				</Text>
-				<Text style={styles.summaryDesc}>
-					The temperature is felt between {forecastData?.min_temp}&#176;
-					and {forecastData?.max_temp}&#176;
-				</Text>
-			</View>
-			<View style={styles.infoContainer}>
-				<View style={styles.innerContainer}>
-					<Icon name='wind' size={46} color={'#eea'} />
-					<Text style={styles.info}>{forecastData?.wind_speed}km/h</Text>
-					<Text style={styles.text}>Wind-speed</Text>
-				</View>
-				<View style={styles.innerContainer}>
-					<Icon name='tint' size={46} color={'#eea'} />
-					<Text style={styles.info}>{forecastData?.humidity}%</Text>
-					<Text style={styles.text}>Humidity</Text>
-				</View>
-				<View style={styles.innerContainer}>
-					<Icon name='location-arrow' size={46} color={'#eea'} />
-					<Text style={styles.info}>
-						{forecastData?.wind_degrees}&#176;
+			{error ? (
+				<View>
+					<Text style={styles.error}>
+						An error occured while fetching data
 					</Text>
-					<Text style={styles.text}>Wind-direction</Text>
+					<Text>
+						Either {name} is not a valid city or you are not connected to
+						the internet
+					</Text>
+					<View style={styles.button}>
+						<Button
+							title='Go back'
+							onPress={() => navigation.goBack()}
+							color={'transparent'}
+						/>
+					</View>
 				</View>
-			</View>
-			<View style={styles.button}>
-				<Button
-					title='Go back'
-					onPress={() => navigation.goBack()}
-					color={'transparent'}
-				/>
-			</View>
+			) : (
+				<View>
+					<Text style={styles.location}>
+						{name[0].toUpperCase() + name.substring(1)}
+					</Text>
+					<View
+						style={{
+							backgroundColor: 'black',
+							borderRadius: 70,
+							paddingVertical: 5 * 2,
+							paddingHorizontal: 7 * 2,
+						}}
+					>
+						{displayDate()}
+					</View>
+					<Text style={styles.temp}>{forecastData?.temp}&#176;</Text>
+					<View style={styles.summary}>
+						<Text style={styles.summaryTitle}>Data Summary</Text>
+						<Text style={styles.summaryDesc}>
+							It actually feels like {forecastData?.feels_like}&#176; now
+						</Text>
+						<Text style={styles.summaryDesc}>
+							The temperature is felt between {forecastData?.min_temp}
+							&#176; and {forecastData?.max_temp}&#176;
+						</Text>
+					</View>
+					<View style={styles.infoContainer}>
+						<View style={styles.innerContainer}>
+							<Icon name='wind' size={46} color={'#eea'} />
+							<Text style={styles.info}>
+								{forecastData?.wind_speed}km/h
+							</Text>
+							<Text style={styles.text}>Wind-speed</Text>
+						</View>
+						<View style={styles.innerContainer}>
+							<Icon name='tint' size={46} color={'#eea'} />
+							<Text style={styles.info}>{forecastData?.humidity}%</Text>
+							<Text style={styles.text}>Humidity</Text>
+						</View>
+						<View style={styles.innerContainer}>
+							<Icon name='location-arrow' size={46} color={'#eea'} />
+							<Text style={styles.info}>
+								{forecastData?.wind_degrees}&#176;
+							</Text>
+							<Text style={styles.text}>Wind-direction</Text>
+						</View>
+					</View>
+					<View style={styles.button}>
+						<Button
+							title='Go back'
+							onPress={() => navigation.goBack()}
+							color={'transparent'}
+						/>
+					</View>
+				</View>
+			)}
 		</SafeAreaView>
 	);
 };
@@ -187,5 +210,11 @@ const styles = StyleSheet.create({
 		paddingVertical: 10,
 		paddingHorizontal: 12,
 		marginTop: 20,
+	},
+
+	error: {
+		fontSize: 20,
+		color: 'red',
+		fontWeight: '500',
 	},
 });

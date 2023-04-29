@@ -4,13 +4,10 @@ import {
 	KeyboardAvoidingView,
 	Platform,
 	StyleSheet,
-	Text,
 	View,
 } from 'react-native';
 import SearchInput from './SearchInput';
 import { StatusBar } from 'expo-status-bar';
-import { TouchableOpacity } from 'react-native';
-import { log } from 'react-native-reanimated';
 
 const Home = ({ navigation }: { navigation: any }) => {
 	const [location, setLocation] = useState('');

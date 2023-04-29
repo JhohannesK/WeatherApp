@@ -50,10 +50,6 @@ const Forecast = ({
 			const response = axios
 				.request(options(latitude, longitude))
 				.then((response) => {
-					console.log(
-						'🚀 ~ file: Forecast.tsx:41 ~ .then ~ response:',
-						response.data
-					);
 					setForecastData(response.data);
 				});
 		} catch (error) {

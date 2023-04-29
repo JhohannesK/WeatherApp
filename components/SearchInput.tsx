@@ -46,43 +46,12 @@ const SearchInput = ({ displayLocation, navigation }: SearchInputProps) => {
 				value={location}
 				onBlur={() => displayText(location)}
 			/>
-			{/* {isFocus && (
-				<View style={styles.dropdownView}>
-					<Text>haha</Text>
-				</View>
-			)} */}
-			{/* <FlatList
-				style={styles.dropdownView}
-				data={data}
-				renderItem={({ item }) => <Text>{item.label}</Text>}
-			/> */}
-			{/* <Dropdown
-				style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-				placeholderStyle={styles.placeholderStyle}
-				selectedTextStyle={styles.selectedTextStyle}
-				inputSearchStyle={styles.inputSearchStyle}
-				data={data ? data : []}
-				placeholder={!isFocus ? 'Search City' : '...'}
-				searchPlaceholder='Search...'
-				value={'try'}
-				search
-				onFocus={() => setIsFocus(true)}
-				onBlur={() => setIsFocus(false)}
-				labelField={'label'}
-				valueField={'value'}
-				onChange={(item) => {
-					setIsFocus(false);
-					setValue(item.value);
-				}}
-				onChangeText={(item) => {
-					console.log('typed', item);
-					getGeoLocation(item);
-				}}
-			/> */}
+
 			<TouchableOpacity
+				style={styles.searchBtn}
 				onPress={() => navigation.navigate('Forecast', { name: location })}
 			>
-				<Icon name='search' size={22} color='white' />
+				<Icon name='search' size={30} color='black' />
 			</TouchableOpacity>
 		</View>
 	);
@@ -116,9 +85,24 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 8,
 		backgroundColor: 'white',
 	},
+
+	searchBtn: {
+		backgroundColor: '#eea',
+		borderTopRightRadius: 5,
+		borderBottomRightRadius: 5,
+		justifyContent: 'center',
+		alignItems: 'center',
+		position: 'absolute',
+		top: 20,
+		right: 0,
+		height: 50,
+		width: 42,
+	},
+
 	icon: {
 		marginRight: 5,
 	},
+
 	label: {
 		position: 'absolute',
 		backgroundColor: 'white',

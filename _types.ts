@@ -34,5 +34,5 @@ export interface IForecast {
 	sunset: number;
 	temp: number;
 	wind_speed: number;
-	wind_degree: number;
+	wind_degrees: number;
 }

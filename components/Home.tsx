@@ -30,9 +30,6 @@ const Home = ({ navigation }: { navigation: any }) => {
 				imageStyle={styles.image}
 			>
 				<View style={styles.detailsContainer}>
-					<TouchableOpacity onPress={() => console.log('here')}>
-						<Text>Please click</Text>
-					</TouchableOpacity>
 					<SearchInput
 						displayLocation={displayLocation}
 						navigation={navigation}

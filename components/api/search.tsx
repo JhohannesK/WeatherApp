@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { GeoLocation } from '../../_types';
+import { RAPIDAPI_KEY } from '@env';
 
 const getUrl = (location: string) => {
 	const options = {
@@ -8,7 +9,7 @@ const getUrl = (location: string) => {
 		url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities',
 		params: { namePrefix: `${location}`, countryIds: 'Gh' },
 		headers: {
-			'X-RapidAPI-Key': '71156a074amshb03fcd9292793aep19c323jsn5519e168243d',
+			'X-RapidAPI-Key': RAPIDAPI_KEY,
 			'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
 		},
 	};

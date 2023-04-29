@@ -4,8 +4,8 @@ import { useGeoLocation } from './api/search';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { IForecast } from '../_types';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { RAPIDAPI_KEY } from '@env';
 
 type MyRoute = Route<'Forecast', { name: string }>;
 const options = (lat: number, lon: number) => {
@@ -15,7 +15,7 @@ const options = (lat: number, lon: number) => {
 		params: { lat: `${lat}`, lon: `${lon}` },
 		headers: {
 			'content-type': 'application/octet-stream',
-			'X-RapidAPI-Key': '71156a074amshb03fcd9292793aep19c323jsn5519e168243d',
+			'X-RapidAPI-Key': RAPIDAPI_KEY,
 			'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com',
 		},
 	};

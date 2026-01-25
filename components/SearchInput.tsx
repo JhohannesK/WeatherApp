@@ -2,24 +2,11 @@ import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SearchInputProps } from '../_types';
 import { TextInput } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
-const data = [
-	{
-		label: 'something',
-		value: 'something',
-	},
-	{
-		label: 'great',
-		value: 'something',
-	},
-	{
-		label: 'today',
-		value: 'something',
-	},
-];
-
-const SearchInput = ({ displayLocation, navigation }: SearchInputProps) => {
+const SearchInput = ({ displayLocation }: Omit<SearchInputProps, 'navigation'>) => {
+	const router = useRouter();
 	const [value, setValue] = useState<string | null>(null);
 	const [isFocus, setIsFocus] = useState(false);
 	const [location, setLocation] = useState('');
@@ -47,9 +34,9 @@ const SearchInput = ({ displayLocation, navigation }: SearchInputProps) => {
 
 			<TouchableOpacity
 				style={styles.searchBtn}
-				onPress={() => navigation.navigate('Forecast', { name: location })}
+				onPress={() => router.push(`/forecast/${location}`)}
 			>
-				<Icon name='search' size={30} color='black' />
+				<Ionicons name='search' size={30} color='black' />
 			</TouchableOpacity>
 		</View>
 	);

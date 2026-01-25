@@ -1,16 +1,18 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { GeoLocation } from '../../_types';
-import { RAPIDAPI_KEY } from '@env';
+import Constants from 'expo-constants';
+
+const RAPIDAPI_KEY = Constants.expoConfig?.extra?.RAPIDAPI_KEY ?? '';
 
 const getUrl = (location: string) => {
 	const options = {
 		method: 'GET',
-		url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities',
-		params: { namePrefix: `${location}`, countryIds: 'Gh' },
+		url: 'https://open-weather13.p.rapidapi.com/city',
+		params: { city: `${location}`, lang: 'EN' },
 		headers: {
 			'X-RapidAPI-Key': RAPIDAPI_KEY,
-			'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
+			'X-RapidAPI-Host': 'open-weather13.p.rapidapi.com',
 		},
 	};
 	return options;
@@ -22,15 +24,22 @@ export const useGeoLocation = (
 	const [data, setData] = useState<GeoLocation>();
 	const [error, setError] = useState<Boolean>(false);
 	const getGeoLocation = (location: string) => {
+		setError(false);
 		axios
 			.request(getUrl(location))
-			.then(function (response) {
-				const { longitude, latitude } = response.data.data[0];
-				onSucess && onSucess(latitude, longitude);
-				setData({ longitude, latitude });
-				setError(false);
+			.then((response) => {
+				if (response.data && response.data.coord) {
+					const { lat, lon } = response.data.coord;
+					onSucess && onSucess(lat, lon);
+					setData({ latitude: lat, longitude: lon });
+					setError(false);
+				} else {
+					console.error('Invalid response structure:', response.data);
+					setError(true);
+				}
 			})
-			.catch(function (error) {
+			.catch((error) => {
+				console.error('GeoLocation API Error:', error.response?.data || error.message);
 				setError(true);
 			});
 	};

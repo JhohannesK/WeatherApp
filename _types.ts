@@ -1,6 +1,5 @@
 export interface SearchInputProps {
 	displayLocation: (location: string) => void;
-	navigation: any;
 }
 
 export type ResponseType = {

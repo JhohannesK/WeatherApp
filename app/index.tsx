@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import {
 	ImageBackground,
 	KeyboardAvoidingView,
@@ -6,10 +6,10 @@ import {
 	StyleSheet,
 	View,
 } from 'react-native';
-import SearchInput from './SearchInput';
+import SearchInput from '../components/SearchInput';
 import { StatusBar } from 'expo-status-bar';
 
-const Home = ({ navigation }: { navigation: any }) => {
+export default function Home() {
 	const [location, setLocation] = useState('');
 
 	const displayLocation = (location: string) => {
@@ -17,35 +17,29 @@ const Home = ({ navigation }: { navigation: any }) => {
 	};
 
 	return (
-		<KeyboardAvoidingView
-			style={styles.container}
-			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+		<ImageBackground
+			source={require('../assets/images/cold.jpg')}
+			style={styles.ImageContainer}
+			imageStyle={styles.image}
 		>
-			<ImageBackground
-				source={require('../assets/images/cold.jpg')}
-				style={styles.ImageContainer}
-				imageStyle={styles.image}
+			<KeyboardAvoidingView
+				style={styles.container}
+				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 			>
 				<View style={styles.detailsContainer}>
-					<SearchInput
-						displayLocation={displayLocation}
-						navigation={navigation}
-					/>
+					<SearchInput displayLocation={displayLocation} />
 				</View>
+			</KeyboardAvoidingView>
 
-				<StatusBar style='auto' />
-			</ImageBackground>
-		</KeyboardAvoidingView>
+			<StatusBar style="auto" />
+		</ImageBackground>
 	);
-};
-
-export default Home;
+}
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
+		width: '100%',
 		justifyContent: 'center',
 	},
 
@@ -74,17 +68,10 @@ const styles = StyleSheet.create({
 		flex: 1,
 		width: '100%',
 		height: '100%',
-		justifyContent: 'center',
-		// opacity: 0.5,
-		// backgroundColor: 'black',
 	},
 
 	image: {
-		flex: 1,
-		width: '100%',
-		height: undefined,
 		resizeMode: 'cover',
 		opacity: 0.5,
-		backgroundColor: 'black',
 	},
 });

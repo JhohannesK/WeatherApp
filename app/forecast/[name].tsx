@@ -6,6 +6,7 @@ import { IForecast } from '../../_types';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { convertToCelsius } from '../../utils';
 
 const RAPIDAPI_KEY = Constants.expoConfig?.extra?.RAPIDAPI_KEY ?? '';
 
@@ -38,6 +39,7 @@ export default function Forecast() {
     const { name } = useLocalSearchParams<{ name: string }>();
     const router = useRouter();
     const [forecastData, setForecastData] = useState<IForecast>();
+    console.log("🚀 ~ Forecast ~ forecastData:", forecastData)
     const [loading, setLoading] = useState(true);
     const [apiError, setApiError] = useState(false);
 
@@ -106,34 +108,34 @@ export default function Forecast() {
                     >
                         {displayDate()}
                     </View>
-                    <Text style={styles.temp}>{forecastData?.temp}&#176;</Text>
+                    <Text style={styles.temp}>{convertToCelsius(forecastData?.main.temp ?? 0)}&#176;</Text>
                     <View style={styles.summary}>
                         <Text style={styles.summaryTitle}>Data Summary</Text>
                         <Text style={styles.summaryDesc}>
-                            It actually feels like {forecastData?.feels_like}&#176; now
+                            It actually feels like {convertToCelsius(forecastData?.main.feels_like ?? 0)}&#176; now
                         </Text>
                         <Text style={styles.summaryDesc}>
-                            The temperature is felt between {forecastData?.min_temp}
-                            &#176; and {forecastData?.max_temp}&#176;
+                            The temperature is felt between {convertToCelsius(forecastData?.main.temp_min ?? 0)}
+                            &#176; and {convertToCelsius(forecastData?.main.temp_max ?? 0)}&#176;
                         </Text>
                     </View>
                     <View style={styles.infoContainer}>
                         <View style={styles.innerContainer}>
                             <FontAwesome5 name="wind" size={46} color={'#eea'} />
                             <Text style={styles.info}>
-                                {forecastData?.wind_speed}km/h
+                                {forecastData?.wind.speed}km/h
                             </Text>
                             <Text style={styles.text}>Wind-speed</Text>
                         </View>
                         <View style={styles.innerContainer}>
                             <FontAwesome5 name="tint" size={46} color={'#eea'} />
-                            <Text style={styles.info}>{forecastData?.humidity}%</Text>
+                            <Text style={styles.info}>{forecastData?.main.humidity}%</Text>
                             <Text style={styles.text}>Humidity</Text>
                         </View>
                         <View style={styles.innerContainer}>
                             <FontAwesome5 name="location-arrow" size={46} color={'#eea'} />
                             <Text style={styles.info}>
-                                {forecastData?.wind_degrees}&#176;
+                                {forecastData?.wind.deg}&#176;
                             </Text>
                             <Text style={styles.text}>Wind-direction</Text>
                         </View>

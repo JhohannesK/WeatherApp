@@ -39,7 +39,6 @@ export default function Forecast() {
     const { name } = useLocalSearchParams<{ name: string }>();
     const router = useRouter();
     const [forecastData, setForecastData] = useState<IForecast>();
-    console.log("🚀 ~ Forecast ~ forecastData:", forecastData)
     const [loading, setLoading] = useState(true);
     const [apiError, setApiError] = useState(false);
 

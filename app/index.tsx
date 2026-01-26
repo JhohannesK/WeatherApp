@@ -4,12 +4,16 @@ import {
 	KeyboardAvoidingView,
 	Platform,
 	StyleSheet,
+	TouchableOpacity,
 	View,
 } from 'react-native';
 import SearchInput from '../components/SearchInput';
 import { StatusBar } from 'expo-status-bar';
+import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function Home() {
+	const router = useRouter();
 	const [location, setLocation] = useState('');
 
 	const displayLocation = (location: string) => {
@@ -26,6 +30,12 @@ export default function Home() {
 				style={styles.container}
 				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 			>
+				<TouchableOpacity
+					style={styles.favoritesButton}
+					onPress={() => router.push('/favorites')}
+				>
+					<Ionicons name="heart" size={28} color="#eea" />
+				</TouchableOpacity>
 				<View style={styles.detailsContainer}>
 					<SearchInput displayLocation={displayLocation} />
 				</View>
@@ -73,5 +83,14 @@ const styles = StyleSheet.create({
 	image: {
 		resizeMode: 'cover',
 		opacity: 0.5,
+	},
+	favoritesButton: {
+		position: 'absolute',
+		top: 60,
+		right: 20,
+		zIndex: 10,
+		backgroundColor: 'rgba(0, 0, 0, 0.5)',
+		borderRadius: 25,
+		padding: 12,
 	},
 });
